@@ -21,3 +21,4 @@ src/inspect_ai/model/_providers/openrouter.py/OpenRouterAPI/completion_params (l
 ## Comments
 - solvers can be chain but chain(...) only supports sequential pipeline of solver steps
 - beneficial for intermediate modular evaluation (1 module = 1 solver)
+- does not seem to support Filesystem MCP Server (validation error for read_file)
