@@ -84,7 +84,8 @@ def web_research_agent(*, max_results: int = 5) -> Agent:
     return execute
 ```
 However, there is a mismatch in the response schema returned by Inspect bridge and expected by LangGraph. 
-A child class InspectBridgeChatOpenAI is created to resolve this.
+
+A child class InspectBridgeChatOpenAI (under ```langchain_agent/agent.py```) is created to resolve this.
 
 
 ## Comments
