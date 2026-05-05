@@ -23,11 +23,13 @@ Agents can be bridged into Inspect using agent_bridge(), where Inspect will inte
 
 #### Flow
 Inspect messages converted to LangChain messages -> LangGraph agent runs -> Inspect bridge intercepts and call cli model -> returns response to LangGraph -> LangGraph finishes -> returns bridge.state to Inspect  
+
+This tells Inspect to use OpenRouter as provider and gpt-4.1-mini as the model. 
 ```
 inspect eval task.py --model openrouter/openai/gpt-4.1-mini
 ```
-This tells Inspect to use OpenRouter as provider and gpt-4.1-mini as the model. 
 
+Agent implementation
 ```
 @agent
 def web_research_agent(*, max_results: int = 5) -> Agent:
