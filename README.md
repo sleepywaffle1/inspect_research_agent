@@ -18,6 +18,7 @@ src/inspect_ai/model/_providers/openrouter.py/OpenRouterAPI/completion_params (l
             }
 ```
 
+
 Agents can be bridged into Inspect using agent_bridge(), where Inspect will intercept the model calling. 
 
 Flow
