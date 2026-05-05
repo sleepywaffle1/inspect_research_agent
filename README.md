@@ -19,7 +19,7 @@ src/inspect_ai/model/_providers/openrouter.py/OpenRouterAPI/completion_params (l
             }
 ```
 ### agent_bridge() for LangChain
-Agents can be bridged into Inspect using agent_bridge(), where Inspect will intercept the model calling. 
+Agents can be bridged into Inspect using ```agent_bridge()```, where Inspect will intercept the model calling. 
 
 #### Flow
 Inspect messages converted to LangChain messages -> LangGraph agent runs -> Inspect bridge intercepts and call cli model -> returns response to LangGraph -> LangGraph finishes -> returns bridge.state to Inspect  
