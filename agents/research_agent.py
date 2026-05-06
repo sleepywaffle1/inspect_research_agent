@@ -1,4 +1,5 @@
 from pathlib import Path
+from datetime import datetime
 
 from inspect_ai.agent import agent, react, Agent
 from inspect_ai.tool import web_search, mcp_server_stdio
@@ -20,6 +21,10 @@ def get_current_dir() -> Path:
     except NameError:  # __file__ is not defined
         return Path.cwd()
 
+def get_today_str() -> str:
+    """Get current date in a human-readable format."""
+    return datetime.now().strftime("%a %b %-d, %Y")
+
 
 @agent
 def research_agent(
@@ -35,7 +40,7 @@ def research_agent(
     return react(
         name="researcher",
         description="Performs iterative web research and submits research findings.",
-        prompt=research_agent_prompt,
+        prompt=research_agent_prompt.format(date=get_today_str()),
         tools=[
             web_search({"tavily": {"max_results": 5}}),
             think_tool(),

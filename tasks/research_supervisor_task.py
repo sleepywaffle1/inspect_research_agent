@@ -4,7 +4,7 @@ from inspect_ai.scorer import match
 from inspect_ai.solver import chain
 
 from solvers.research_supervisor_solver import research_supervisor_solver
-from solvers.pre_scope_solver import pre_scope_solver
+from solvers.research_brief_solver import research_brief_solver
 
 research_brief = """I want to identify and evaluate the coffee shops in San Francisco that are considered the best based specifically  
 on coffee quality. My research should focus on analyzing and comparing coffee shops within the San Francisco area, 
@@ -44,12 +44,12 @@ def research_task():
             ),
             Sample(
                 input="Compare Tesla vs BYD electric vehicles in 2025. Focus on technical specifications, performance, and market reception. Do not ask anymore clarification questions.",
-                target="This is a dummy target for the second sample.",
+                target="This is a dummy target for the second sample.", # or expected final summary
             ),
         ],
         solver=chain(
-            # optional if you already have research brief
-            pre_scope_solver(),
+            # research_brief_solver is optional if you already have research brief
+            research_brief_solver(),
             research_supervisor_solver(),
         ),
     )

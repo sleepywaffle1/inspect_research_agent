@@ -38,7 +38,7 @@ class ResearchComplete(BaseModel):
     """Tool for indicating that the research process is complete."""
     pass
 
-
+# forces the supervisor_solver to reflect and come up with the next research topic(s) to delegate to the research_agent
 @tool
 def conduct_research():
     async def execute(research_topic: str) -> str:
@@ -76,12 +76,14 @@ def research_supervisor_solver(
     async def solve(state: TaskState, generate: Generate) -> TaskState:
         model = get_model(supervisor_model)
 
+        # obtain research_brief from research_brief_solver
         research_brief = (
             state.metadata.get("research_brief")
             or state.output.completion
             or str(state.input)
         )
 
+        # starts a new supervisor_messages chain
         supervisor_messages = [
             ChatMessageUser(content=research_brief)
         ]
@@ -89,15 +91,15 @@ def research_supervisor_solver(
         all_notes: list[str] = []
         all_raw_notes: list[str] = []
 
-        for iteration in range(max_researcher_iterations):
-            system_message = ChatMessageSystem(
-                content=lead_researcher_prompt.format(
-                    date=get_today_str(),
-                    max_concurrent_research_units=max_concurrent_researchers,
-                    max_researcher_iterations=max_researcher_iterations,
-                )
+        # for each iteration, the supervisor can choose to delegate multiple research tasks to the research agent in parallel, or reflect using the think tool, or complete the research process
+        system_message = ChatMessageSystem(
+            content=lead_researcher_prompt.format(
+                date=get_today_str(), 
+                max_concurrent_research_units=max_concurrent_researchers,
+                max_researcher_iterations=max_researcher_iterations
             )
-
+        )
+        for iteration in range(max_researcher_iterations):
             output = await model.generate(
                 [system_message, *supervisor_messages],
                 tools=[
@@ -148,8 +150,6 @@ def research_supervisor_solver(
                 for call in conduct_calls:
                     research_topic = call.arguments["research_topic"]
 
-                    # Run your existing researcher solver as sub-agent logic.
-                    # Simpler alternative: call research_agent(...) directly.
                     async def run_one(topic: str):
                         # sub_state = TaskState(
                         #     input=[ChatMessageUser(content=topic)],
