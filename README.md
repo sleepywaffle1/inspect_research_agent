@@ -2,6 +2,7 @@
 
 ## Details
 This repo implements the deep research agent from langchain-ai/deep_research_from_scratch using InspectAI framework.
+![alt text](image.png)
 
 ## Setup
 To setup, first git clone InspectAI from: https://github.com/UKGovernmentBEIS/inspect_ai
