@@ -116,39 +116,21 @@ This provides a comprehensive assessment of SF coffee shops based specifically o
     )
 ]
 
-# Scenario 3: Agent should CONTINUE - ideally call MCP
-messages_should_call_mcp = [
-    ChatMessageUser(content="What are the top coffee shops in San Francisco based on coffee quality? Try to find from local filesystem first before searching the web."),
-]
-
-# @task
-# def research_agent_task():
-#     return Task(
-#         dataset=[
-#             Sample(
-#                 input=messages_should_continue,
-#                 target="continue",
-#             ),
-#             Sample(
-#                 input=messages_should_stop,
-#                 target="stop",
-#             ),
-#         ],
-#         solver=research_agent_solver(mode="terminate"),
-#         scorer=match(location="exact"),
-#         model="openrouter/openai/gpt-4.1-mini"
-#     )
 
 @task
 def research_agent_task():
     return Task(
         dataset=[
             Sample(
-                input=messages_should_call_mcp,
+                input=messages_should_continue,
+                target="continue",
+            ),
+            Sample(
+                input=messages_should_stop,
                 target="stop",
             ),
         ],
-        solver=research_agent_solver(mode="full"),
+        solver=research_agent_solver(mode="terminate"),
         scorer=match(location="exact"),
-        model="openrouter/openai/gpt-4.1-mini"
+        # model="openrouter/openai/gpt-4.1-mini"
     )

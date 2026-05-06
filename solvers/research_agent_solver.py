@@ -13,6 +13,8 @@ from prompts import (
 )
 from tools.think_tool import think_tool
 
+# ===== UTILITY FUNCTIONS =====
+
 def get_today_str() -> str:
     """Get current date in a human-readable format."""
     return datetime.now().strftime("%a %b %-d, %Y")
@@ -22,7 +24,7 @@ def get_today_str() -> str:
 def research_agent_solver(
     researcher_model: str = "openrouter/openai/gpt-4.1-mini",
     compress_model: str = "openrouter/openai/gpt-4.1-mini",
-    mode: str = "full" # or terminate
+    mode: str = "full" # or terminate for stepwise evaluation
 ):
     async def solve(state: TaskState, generate: Generate) -> TaskState:
 
@@ -49,12 +51,14 @@ def research_agent_solver(
 
             return state
 
+        # full mode runs the entire agent end-to-end and output a compressed research
         research_topic = (
-            state.metadata.get("research_brief")
+            state.metadata.get("research_brief") # from earlier research_brief_solver
             or state.output.completion
             or str(state.input)
         )
 
+        # runs the react agent and gets the raw research notes
         agent_state = await run(
             research_agent(model=researcher_model),
             input=research_topic,
@@ -75,7 +79,7 @@ def research_agent_solver(
                     content=(
                         f"Research topic:\n{research_topic}\n\n"
                         f"Raw research notes:\n{raw_research}\n\n"
-                        f"{compress_research_human_message}"
+                        f"{compress_research_human_message.format(research_topic=research_topic)}"
                     )
                 ),
             ]

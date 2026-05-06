@@ -6,7 +6,7 @@ from inspect_ai.tool import web_search, mcp_server_stdio
 from prompts import research_agent_prompt
 from tools.think_tool import think_tool
 
-# ===== UTILITIES =====
+# ===== UTILITY FUNCTIONS =====
 def get_current_dir() -> Path:
     """Get the current directory of the module.
 
@@ -25,12 +25,12 @@ def get_current_dir() -> Path:
 def research_agent(
     model: str = "openrouter/openai/gpt-4.1-mini",
 ) -> Agent:
-    # MCP server configuration for filesystem access
-    filesystem_server = mcp_server_stdio(
-        name="filesystem",
-        command="npx", 
-        args=["-y", "@modelcontextprotocol/server-filesystem", str(get_current_dir() / "files")],  # Path to research documents
-    )
+    # # MCP server configuration for filesystem access
+    # filesystem_server = mcp_server_stdio(
+    #     name="filesystem",
+    #     command="npx", 
+    #     args=["-y", "@modelcontextprotocol/server-filesystem", str(get_current_dir() / "files")],  # Path to research documents
+    # )
 
     return react(
         name="researcher",
