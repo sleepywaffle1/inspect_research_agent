@@ -3,11 +3,20 @@
 ## Details
 This repo implements the deep research agent from langchain-ai/deep_research_from_scratch using InspectAI framework.
 
-## Note
-### Structured output with OpenRouter
-To ensure InspectAI is able to support structured output for OpenRouter, I have added the following edits to the library:
+## Setup
+To setup, first git clone InspectAI from: https://github.com/UKGovernmentBEIS/inspect_ai
+
+Commands:
 ```
-src/inspect_ai/model/_providers/openrouter.py/OpenRouterAPI/completion_params (line 272 onwards)
+uv venv --python3.12
+uv sync
+```
+
+### Structured output with OpenRouter
+To ensure InspectAI is able to support structured output for OpenRouter, I have added the following edits to the cloned library:
+```
+src/inspect_ai/model/_providers/openrouter.py/OpenRouterAPI/completion_params
+        ...
         # own edit: to enable structured output
         if config.response_schema is not None:
             params["response_format"] = {
@@ -17,8 +26,16 @@ src/inspect_ai/model/_providers/openrouter.py/OpenRouterAPI/completion_params (l
                     "schema": config.response_schema.json_schema,
                 },
             }
+
+        return params
 ```
-### agent_bridge() for LangChain
+
+### Running the evaluations
+```
+PYTHONPATH=. inspect eval tasks/<TASK_NAME>.py --model openrouter/openai/gpt-4.1-mini
+```
+
+## agent_bridge() for LangChain
 Agents can be bridged into Inspect using ```agent_bridge()```, where Inspect will intercept the model calling. 
 
 #### Flow
