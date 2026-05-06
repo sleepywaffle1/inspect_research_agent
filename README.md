@@ -6,12 +6,6 @@ This repo implements the deep research agent from langchain-ai/deep_research_fro
 ## Setup
 To setup, first git clone InspectAI from: https://github.com/UKGovernmentBEIS/inspect_ai
 
-Commands:
-```
-uv venv --python3.12
-uv sync
-```
-
 ### Structured output with OpenRouter
 To ensure InspectAI is able to support structured output for OpenRouter, I have added the following edits to the cloned library:
 ```
@@ -28,6 +22,12 @@ src/inspect_ai/model/_providers/openrouter.py/OpenRouterAPI/completion_params
             }
 
         return params
+```
+
+### uv commands
+```
+uv venv --python3.12
+uv sync
 ```
 
 ### Running the evaluations
