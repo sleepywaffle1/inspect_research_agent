@@ -2,7 +2,7 @@ from inspect_ai import Task, task
 from inspect_ai.dataset import Sample
 from inspect_ai.solver import chain
 
-from solvers.pre_scope_solver import pre_scope_solver
+from solvers.research_brief_solver import research_brief_solver
 from solvers.research_supervisor_solver import research_supervisor_solver
 from solvers.generate_report_solver import generate_report_solver
 
@@ -22,7 +22,7 @@ def research_task():
         ],
         solver=chain(
             # optional if you already have research brief
-            pre_scope_solver(),
+            research_brief_solver(),
             research_supervisor_solver(),
             generate_report_solver(),
         ),

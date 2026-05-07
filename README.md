@@ -47,7 +47,7 @@ This tells Inspect to use OpenRouter as provider and gpt-4.1-mini as the model.
 inspect eval task.py --model openrouter/openai/gpt-4.1-mini
 ```
 
-Agent implementation
+#### Agent implementation
 ```
 @agent
 def web_research_agent(*, max_results: int = 5) -> Agent:
@@ -72,7 +72,7 @@ def web_research_agent(*, max_results: int = 5) -> Agent:
             model = InspectBridgeChatOpenAI(
                 model="inspect",
                 api_key="dummy",
-                base_url="http://localhost:13131/v1",
+                base_url="http://localhost:13131/v1", # proxy server
                 include_response_headers=False,
             )
 
