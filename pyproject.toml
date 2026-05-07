@@ -8,6 +8,8 @@ dependencies = [
     "google-genai>=1.74.0",
     "inspect-ai",
     "langchain>=1.2.17",
+    "langchain-community>=0.4.1",
+    "langchain-openai>=1.2.1",
     "langgraph>=1.1.10",
     "mcp>=1.27.0",
     "openai>=2.33.0",
